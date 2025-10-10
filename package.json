@@ -1,12 +1,12 @@
 {
-  "name": "balg",
-  "main": "./dist/balg.js",
+  "name": "logw",
+  "main": "./dist/logw.js",
   "type": "module",
   "version": "0.0.2",
   "scripts": {
     "build-file-provider": "bun build ./src/file-provider.ts --target node --outdir ./dist",
-    "build-balg": "bun build ./src/balg.ts --outdir ./dist --env=disable",
-    "build": "bun run build-balg && bun run build-file-provider && bun run types",
+    "build-logw": "bun build ./src/logw.ts --outdir ./dist --env=disable",
+    "build": "bun run build-logw && bun run build-file-provider && bun run types",
     "types": "tsc --project tsconfig.types.json"
   },
   "files": [
@@ -14,8 +14,8 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/balg.js",
-      "types": "./dist/types/balg.d.ts"
+      "import": "./dist/logw.js",
+      "types": "./dist/types/logw.d.ts"
     },
     "./file-provider": {
       "import": "./dist/file-provider.js",

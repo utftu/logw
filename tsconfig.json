@@ -26,8 +26,8 @@
     "noPropertyAccessFromIndexSignature": false,
     "baseUrl": ".",
     "paths": {
-      "balg/file-provider": ["./dist/types/file-provider.d.ts"],
-      "balg": ["./dist/types/balg.d.ts"]
+      "logw/file-provider": ["./dist/types/file-provider.d.ts"],
+      "logw": ["./dist/types/logw.d.ts"]
     }
   }
 }
