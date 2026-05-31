@@ -1,25 +1,21 @@
-import { getConsoleProvider } from "./console-provider.ts";
 import type { LogEnt, Provider } from "./types.ts";
 
-const defaultProviders = [getConsoleProvider()];
-
 export class LoggerCore {
-  loggerStreams: TransformStream<LogEnt, LogEnt> = new TransformStream();
-  private providers: Provider[];
+  private writers: WritableStreamDefaultWriter<LogEnt>[] = [];
 
-  constructor(providers: Provider[] = defaultProviders) {
-    this.providers = providers;
+  constructor(providers: Provider[] = []) {
+    for (const provider of providers) {
+      this.writers.push(provider.writer.getWriter());
+    }
   }
 
   addProvider(provider: Provider) {
-    this.providers.push(provider);
+    this.writers.push(provider.writer.getWriter());
   }
 
   write(logEnt: LogEnt) {
-    for (const provider of this.providers) {
-      const writer = provider.writer.getWriter();
+    for (const writer of this.writers) {
       writer.write(logEnt);
-      writer.releaseLock();
     }
   }
 }

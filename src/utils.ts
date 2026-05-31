@@ -11,7 +11,7 @@ export const formatToJson = (logEnt: LogEnt) => {
 
   if ("error" in logEnt.props) {
     objToJson.error = {
-      messgae: logEnt.props.error.message,
+      message: logEnt.props.error.message,
       stack: logEnt.props.error.stack,
     };
   }

@@ -1,4 +1,5 @@
 import { LoggerCore } from "./core.ts";
+import { getConsoleProvider } from "./console-provider.ts";
 import type { LevelConfig, Provider } from "./types.ts";
 
 const defaultLevelConfig: LevelConfig = {
@@ -18,18 +19,20 @@ export type LoggerProps = {
 export class Logger {
   core: LoggerCore;
   prefix: string;
-  showTime: boolean = false;
-
   levelConfig: LevelConfig;
   props: Record<string, any> = {};
 
-  constructor({ prefix = "", core, levelConfig }: LoggerProps) {
-    this.core = core ?? new LoggerCore();
+  constructor({ prefix = "", core, levelConfig, providers }: LoggerProps = {}) {
+    this.core = core ?? new LoggerCore(providers ?? [getConsoleProvider()]);
     this.prefix = prefix;
     this.levelConfig = { ...defaultLevelConfig, ...levelConfig };
   }
 
   log(text: string) {
+    return this.info(text);
+  }
+
+  info(text: string) {
     if (this.levelConfig.info === false) {
       return;
     }
@@ -40,6 +43,7 @@ export class Logger {
       props: this.props,
     });
   }
+
   debug(text: string) {
     if (this.levelConfig.debug === false) {
       return;
@@ -51,6 +55,7 @@ export class Logger {
       prefix: this.prefix,
     });
   }
+
   warn(text: string) {
     if (this.levelConfig.warn === false) {
       return;
@@ -97,5 +102,6 @@ export const copyLogger = (logger: Logger) => {
     core: logger.core,
   });
   newLogger.levelConfig = { ...logger.levelConfig };
+  newLogger.props = { ...logger.props };
   return newLogger;
 };

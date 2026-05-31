@@ -1,34 +1,6 @@
 import { appendFileWrppaer } from "./append.ts";
+import { formatToJson } from "./utils.ts";
 import type { LogEnt, Provider } from "./types.ts";
-
-const defaultFormat = (logEnt: LogEnt) => {
-  const objToJson: Record<string, any> = {
-    level: logEnt.level,
-    prefix: logEnt.prefix,
-    time: new Date().toISOString(),
-    msg: logEnt.message,
-    ...logEnt.props,
-  };
-
-  if ("error" in logEnt.props) {
-    objToJson.error = {
-      messgae: logEnt.props.error.message,
-      stack: logEnt.props.error.stack,
-    };
-  }
-
-  if (objToJson.msg === "") {
-    delete objToJson.msg;
-  }
-
-  if (objToJson.prefix === "") {
-    delete objToJson.prefix;
-  }
-
-  const json = JSON.stringify(objToJson);
-
-  return json;
-};
 
 export type FileProviderOptions = {
   errorPath?: string;
@@ -38,7 +10,7 @@ export type FileProviderOptions = {
 };
 
 export class FileProvider implements Provider {
-  formatter = defaultFormat;
+  formatter = formatToJson;
   private pathsToFiles: {
     errorPath: string;
     debugPath: string;

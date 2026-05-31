@@ -8,14 +8,7 @@ const formatMessage = (logEnt: LogEnt) => {
   return `${logEnt.prefix}: ${logEnt.message}`;
 };
 
-const checkObjEmpty = (obj: Props) => {
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      return false;
-    }
-  }
-  return true;
-};
+const checkObjEmpty = (obj: Props) => Object.keys(obj).length === 0;
 
 export class ConsoleProviderDev implements Provider {
   writer = new WritableStream<LogEnt>({
