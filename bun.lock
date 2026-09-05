@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "cssq",
+      "dependencies": {
+        "dapes": "^0.0.58",
+      },
       "devDependencies": {
         "bun-types": "^1.3.0",
         "typescript": "^5.8.3",
@@ -13,6 +16,8 @@
     "@types/node": ["@types/node@22.15.2", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-uKXqKN9beGoMdBfcaTY1ecwz6ctxuJAcUlwE55938g0ZJ8lRxwAZqRz2AJ4pzpt5dHdTPMB863UZ0ESiFUcP7A=="],
 
     "bun-types": ["bun-types@1.4.2", "", { "dependencies": { "@types/node": "*" } }, "sha512-bxV1FgK7yBIzjRe5zBozIM4Bem11ZJcCXSrjWRG3YWLt8yFDePu4cLjpebO8OvPeIE9trbyPF4fuj3Cia4Fj3w=="],
+
+    "dapes": ["dapes@0.0.58", "", { "bin": { "dapes": "dist/cli.js" } }, "sha512-mrqMWW0/88qL2oNAam8c7cV2AUVuOm61XIUd4CCbEEn3aja8uZeZbcCJed41xTFmwZYOMsqH8QLoXqPaGgkw5w=="],
 
     "typescript": ["typescript@5.8.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="],
 
