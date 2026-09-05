@@ -4,10 +4,11 @@
   "type": "module",
   "version": "0.0.2",
   "scripts": {
-    "build-file-provider": "bun build ./src/file-provider.ts --target node --outdir ./dist",
+    "build-file": "bun build ./src/providers/file.ts --target node --outdir ./dist",
     "build-logw": "bun build ./src/logw.ts --outdir ./dist --env=disable",
-    "build": "bun run build-logw && bun run build-file-provider && bun run types",
-    "types": "tsc --project tsconfig.types.json"
+    "build": "bun run build-logw && bun run build-file && bun run types",
+    "types": "tsc --project tsconfig.types.json",
+    "test": "bun test"
   },
   "files": [
     "./dist"
@@ -17,13 +18,13 @@
       "import": "./dist/logw.js",
       "types": "./dist/types/logw.d.ts"
     },
-    "./file-provider": {
-      "import": "./dist/file-provider.js",
-      "types": "./dist/types/file-provider.d.ts"
+    "./file": {
+      "import": "./dist/file.js",
+      "types": "./dist/types/providers/file.d.ts"
     }
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "bun-types": "^1.3.0",
     "typescript": "^5.8.3"
   }
 }

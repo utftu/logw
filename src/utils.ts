@@ -1,5 +1,7 @@
 import type { LogEnt } from "./types.ts";
 
+const isError = (value: unknown): value is Error => value instanceof Error;
+
 export const formatToJson = (logEnt: LogEnt) => {
   const objToJson: Record<string, any> = {
     level: logEnt.level,
@@ -9,7 +11,7 @@ export const formatToJson = (logEnt: LogEnt) => {
     ...logEnt.props,
   };
 
-  if ("error" in logEnt.props) {
+  if (isError(logEnt.props.error)) {
     objToJson.error = {
       message: logEnt.props.error.message,
       stack: logEnt.props.error.stack,

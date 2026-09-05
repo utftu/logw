@@ -1,6 +1,9 @@
 import { Logger, type LoggerProps } from "./logger.ts";
-import { ConsoleProviderDev, ConsoleProviderProd } from "./console-provider.ts";
-import { FileProvider } from "./file-provider.ts";
+import {
+  ConsoleProviderDev,
+  ConsoleProviderProd,
+} from "./providers/console.ts";
+import { FileProvider } from "./providers/file.ts";
 
 export const createLogger = (props: LoggerProps = {}) => {
   return new Logger(props);

@@ -1,5 +1,5 @@
 import { LoggerCore } from "./core.ts";
-import { getConsoleProvider } from "./console-provider.ts";
+import { getConsoleProvider } from "./providers/console.ts";
 import type { LevelConfig, Provider } from "./types.ts";
 
 const defaultLevelConfig: LevelConfig = {
@@ -28,15 +28,15 @@ export class Logger {
     this.levelConfig = { ...defaultLevelConfig, ...levelConfig };
   }
 
-  log(text: string) {
+  async log(text: string) {
     return this.info(text);
   }
 
-  info(text: string) {
+  async info(text: string) {
     if (this.levelConfig.info === false) {
       return;
     }
-    this.core.write({
+    await this.core.write({
       level: "info",
       message: text,
       prefix: this.prefix,
@@ -44,11 +44,11 @@ export class Logger {
     });
   }
 
-  debug(text: string) {
+  async debug(text: string) {
     if (this.levelConfig.debug === false) {
       return;
     }
-    this.core.write({
+    await this.core.write({
       level: "debug",
       message: text,
       props: this.props,
@@ -56,11 +56,11 @@ export class Logger {
     });
   }
 
-  warn(text: string) {
+  async warn(text: string) {
     if (this.levelConfig.warn === false) {
       return;
     }
-    this.core.write({
+    await this.core.write({
       level: "warn",
       message: text,
       prefix: this.prefix,
@@ -68,11 +68,11 @@ export class Logger {
     });
   }
 
-  error(text: string, error?: Error) {
+  async error(text: string, error?: Error) {
     if (this.levelConfig.error === false) {
       return;
     }
-    this.core.write({
+    await this.core.write({
       level: "error",
       message: text,
       prefix: this.prefix,

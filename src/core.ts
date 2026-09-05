@@ -1,21 +1,17 @@
 import type { LogEnt, Provider } from "./types.ts";
 
 export class LoggerCore {
-  private writers: WritableStreamDefaultWriter<LogEnt>[] = [];
+  private providers: Provider[] = [];
 
   constructor(providers: Provider[] = []) {
-    for (const provider of providers) {
-      this.writers.push(provider.writer.getWriter());
-    }
+    this.providers = [...providers];
   }
 
   addProvider(provider: Provider) {
-    this.writers.push(provider.writer.getWriter());
+    this.providers.push(provider);
   }
 
-  write(logEnt: LogEnt) {
-    for (const writer of this.writers) {
-      writer.write(logEnt);
-    }
+  async write(logEnt: LogEnt) {
+    await Promise.all(this.providers.map((provider) => provider.write(logEnt)));
   }
 }
