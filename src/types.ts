@@ -11,14 +11,12 @@ export type LevelConfig = {
 
 export type Props = Record<string, any>;
 
-export type LogEntInit = {
+export type LogEnt = {
   level: Level;
   message: any;
   props: Props;
   prefix: string;
 };
-
-export type LogEnt = LogEntInit;
 
 export type Provider = {
   write(logEnt: LogEnt): void | Promise<void>;

@@ -10,7 +10,7 @@ export type FileProviderOptions = {
 };
 
 export class FileProvider implements Provider {
-  formatter = formatToJson;
+  readonly formatter = formatToJson;
   private pathsToFiles: {
     errorPath: string;
     debugPath: string;
@@ -32,7 +32,7 @@ export class FileProvider implements Provider {
     };
   }
 
-  async write(logEnt: LogEnt) {
+  async write(logEnt: LogEnt): Promise<void> {
     if (logEnt.level === "info") {
       await this.appendFile(this.formatter(logEnt), this.pathsToFiles.infoPath);
     } else if (logEnt.level === "debug") {
@@ -44,7 +44,7 @@ export class FileProvider implements Provider {
     }
   }
 
-  async appendFile(str: string, pathToFile: string) {
+  async appendFile(str: string, pathToFile: string): Promise<void> {
     await appendFileWrppaer(pathToFile, str + "\n");
   }
 }

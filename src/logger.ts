@@ -1,6 +1,6 @@
 import { LoggerCore } from "./core.ts";
 import { getConsoleProvider } from "./providers/console.ts";
-import type { LevelConfig, Provider } from "./types.ts";
+import type { LevelConfig, Props, Provider } from "./types.ts";
 
 const defaultLevelConfig: LevelConfig = {
   info: true,
@@ -20,7 +20,7 @@ export class Logger {
   core: LoggerCore;
   prefix: string;
   levelConfig: LevelConfig;
-  props: Record<string, any> = {};
+  props: Props = {};
 
   constructor({ prefix = "", core, levelConfig, providers }: LoggerProps = {}) {
     this.core = core ?? new LoggerCore(providers ?? [getConsoleProvider()]);
@@ -28,11 +28,11 @@ export class Logger {
     this.levelConfig = { ...defaultLevelConfig, ...levelConfig };
   }
 
-  async log(text: string) {
+  async log(text: string): Promise<void> {
     return this.info(text);
   }
 
-  async info(text: string) {
+  async info(text: string): Promise<void> {
     if (this.levelConfig.info === false) {
       return;
     }
@@ -44,7 +44,7 @@ export class Logger {
     });
   }
 
-  async debug(text: string) {
+  async debug(text: string): Promise<void> {
     if (this.levelConfig.debug === false) {
       return;
     }
@@ -56,7 +56,7 @@ export class Logger {
     });
   }
 
-  async warn(text: string) {
+  async warn(text: string): Promise<void> {
     if (this.levelConfig.warn === false) {
       return;
     }
@@ -68,7 +68,7 @@ export class Logger {
     });
   }
 
-  async error(text: string, error?: Error) {
+  async error(text: string, error?: Error): Promise<void> {
     if (this.levelConfig.error === false) {
       return;
     }
@@ -83,7 +83,13 @@ export class Logger {
     });
   }
 
-  child({ prefix, props }: { prefix?: string; props?: Record<string, any> }) {
+  child({
+    prefix,
+    props,
+  }: {
+    prefix?: string;
+    props?: Props;
+  }): Logger {
     const newLogger = copyLogger(this);
     if (typeof prefix === "string") {
       newLogger.prefix = prefix;
@@ -96,7 +102,7 @@ export class Logger {
   }
 }
 
-export const copyLogger = (logger: Logger) => {
+export function copyLogger(logger: Logger): Logger {
   const newLogger = new Logger({
     prefix: logger.prefix,
     core: logger.core,
@@ -104,4 +110,4 @@ export const copyLogger = (logger: Logger) => {
   newLogger.levelConfig = { ...logger.levelConfig };
   newLogger.props = { ...logger.props };
   return newLogger;
-};
+}

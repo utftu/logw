@@ -50,9 +50,9 @@ export class ConsoleProviderProd implements Provider {
 }
 
 const NODE_ENV = process.env.NODE_ENV;
-export const getConsoleProvider = () => {
+export function getConsoleProvider(): ConsoleProviderDev | ConsoleProviderProd {
   if (NODE_ENV === "production") {
     return new ConsoleProviderProd();
   }
   return new ConsoleProviderDev();
-};
+}

@@ -7,11 +7,11 @@ export class LoggerCore {
     this.providers = [...providers];
   }
 
-  addProvider(provider: Provider) {
+  addProvider(provider: Provider): void {
     this.providers.push(provider);
   }
 
-  async write(logEnt: LogEnt) {
+  async write(logEnt: LogEnt): Promise<void> {
     await Promise.all(this.providers.map((provider) => provider.write(logEnt)));
   }
 }
