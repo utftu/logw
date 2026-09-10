@@ -2,7 +2,7 @@
   "name": "logw",
   "main": "./dist/logw.js",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "build-file": "bun build ./src/providers/file.ts --target node --outdir ./dist",
     "build-logw": "bun build ./src/logw.ts --outdir ./dist --env=disable",
