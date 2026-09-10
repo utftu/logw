@@ -1,5 +1,3 @@
-import type { Logger } from "./logger.ts";
-
 type Level = "info" | "debug" | "warn" | "error";
 
 export type LevelConfig = {

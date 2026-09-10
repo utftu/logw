@@ -1,17 +1,19 @@
 import type { LogEnt, Props, Provider } from "../types.ts";
 import { formatToJson } from "../utils.ts";
 
-const formatMessage = (logEnt: LogEnt) => {
+function formatMessage(logEnt: LogEnt): string {
   if (logEnt.prefix === "") {
     return logEnt.message;
   }
   return `${logEnt.prefix}: ${logEnt.message}`;
+}
+
+function checkObjEmpty(obj: Props): boolean {
+  return Object.keys(obj).length === 0;
 };
 
-const checkObjEmpty = (obj: Props) => Object.keys(obj).length === 0;
-
 export class ConsoleProviderDev implements Provider {
-  write(logEnt: LogEnt) {
+  write(logEnt: LogEnt): void {
     const formattedMessage = formatMessage(logEnt);
     const props = { ...logEnt.props };
     if (logEnt.level === "info") {
@@ -35,7 +37,7 @@ export class ConsoleProviderDev implements Provider {
 }
 
 export class ConsoleProviderProd implements Provider {
-  write(logEnt: LogEnt) {
+  write(logEnt: LogEnt): void {
     const json = formatToJson(logEnt);
     if (logEnt.level === "info") {
       console.log(json);
@@ -49,9 +51,8 @@ export class ConsoleProviderProd implements Provider {
   }
 }
 
-const NODE_ENV = process.env.NODE_ENV;
 export function getConsoleProvider(): ConsoleProviderDev | ConsoleProviderProd {
-  if (NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
     return new ConsoleProviderProd();
   }
   return new ConsoleProviderDev();

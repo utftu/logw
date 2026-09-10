@@ -2,7 +2,7 @@ import type { LogEnt } from "./types.ts";
 
 const isError = (value: unknown): value is Error => value instanceof Error;
 
-export const formatToJson = (logEnt: LogEnt) => {
+export function formatToJson(logEnt: LogEnt): string {
   const objToJson: Record<string, any> = {
     level: logEnt.level,
     prefix: logEnt.prefix,
@@ -29,4 +29,4 @@ export const formatToJson = (logEnt: LogEnt) => {
   const json = JSON.stringify(objToJson);
 
   return json;
-};
+}

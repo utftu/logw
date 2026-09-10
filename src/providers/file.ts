@@ -1,4 +1,4 @@
-import { appendFileWrppaer } from "./append.ts";
+import { appendFileWrapper } from "./append.ts";
 import { formatToJson } from "../utils.ts";
 import type { LogEnt, Provider } from "../types.ts";
 
@@ -45,6 +45,6 @@ export class FileProvider implements Provider {
   }
 
   async appendFile(str: string, pathToFile: string): Promise<void> {
-    await appendFileWrppaer(pathToFile, str + "\n");
+    await appendFileWrapper(pathToFile, str + "\n");
   }
 }
